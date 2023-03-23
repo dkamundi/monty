@@ -24,7 +24,7 @@ void push_stack(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	tok = strtok((void *) 0, " \n");
-	if (validint(tok) == -1)
+	if (!validint(tok))
 	{
 		printf("L<%d>: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
