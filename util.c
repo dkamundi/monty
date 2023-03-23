@@ -58,40 +58,6 @@ char *read_file(char *file)
 }
 
 /**
- * _getline - Get's the specified line number from the input string
- *
- * @s: Input string
- * @line_no: Line number to retrieve
- *
- * Return: Pointer to a string that contains the line number specified
- * Description: This function works under the assumption that each line
- * end with a new line.
- */
-char *_getline(char *s, unsigned int line_no)
-{
-	int curr_lineno;
-	unsigned int char_count, i, start;
-	char *line;
-
-	start = char_count = 0;
-	curr_lineno = 0;
-	for (i = 0; s[i] != '\0' && (curr_lineno != line_no); i++, char_count++)
-	{
-		if (s[i] == '\n')
-		{
-			start = i + 1;
-			char_count = 0;
-			curr_lineno++;
-		}
-		char_count++;
-	}
-
-	line = malloc(sizeof(*line) * char_count);
-	strncpy(line, &s[start], char_count);
-	return (line);
-}
-
-/**
  * validint - Checks if the input string contains only valid int characters
  *
  * @s: Input string
