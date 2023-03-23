@@ -14,9 +14,13 @@ void pall_stack(stack_t **stack, unsigned int line_number)
 	stack_t *iter;
 
 	iter = *stack;
-	while (iter)
+	if (line_number > 0)
 	{
-		printf("%d\n", iter->n);
-		iter = iter->next;
-	}
+		while (iter)
+		{
+			printf("%d\n", iter->n);
+			iter = iter->next;
+		}
+	} else
+		printf("Invalid Line Number: %d", line_number);
 }
