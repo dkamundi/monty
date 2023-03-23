@@ -39,4 +39,4 @@ char *read_file(char *);
 int validint(char *);
 
 extern char *monty_bytecode;
-#endif //_MONTY_H
+#endif
