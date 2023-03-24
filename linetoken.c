@@ -30,23 +30,28 @@ char *_memcpy(char *dest, char *src, unsigned int n)
 }
 
 /**
- * isDelim - Checks whether or not a character is part of the delimiter
+ * delim_type - Checks the type if c is a delimiter and if it is, what type
  *
  * @c: Input character to check
  * @delim: Input string containing the delimiters
  *
- * Return: true if it c is a delimiting character, flase otherwise
+ * Return: if c is a delimiting char return 1, 2 if it's a newline, 0 otherwise
+ * Description: This function is customised to work with the linetoken function
+ * it's shouldn't be assumed to work like the strtok function from the string.h
+ * library
  */
-bool isDelim(char c, char *delim)
+int delim_type(char c, char *delim)
 {
 	int i;
 
+	if (c == '\n')
+		return (2);
 	for (i = 0; delim[i] != '\0'; i++)
 	{
 		if (delim[i] == c)
-			return (true);
+			return (1);
 	}
-	return (false);
+	return (0);
 }
 
 /**
@@ -61,37 +66,44 @@ bool isDelim(char c, char *delim)
  */
 char *linetoken(char **s, char *delim)
 {
-	int i, start, c_len;
+	int i, start, c_len, delim_typ;
 	char *ret;
-	bool r_delim, is_delim;
+	bool r_delim, not_first;
 
-	is_delim = r_delim = false;
-	start = c_len = i = 0;
+	not_first = r_delim = false;
+	delim_typ = start = c_len = i = 0;
 	ret = (void *) 0;
-	while ((*s)[i] != '\0')
+	while (((*s)[i] != '\0'))
 	{
-		is_delim = isDelim((*s)[i], delim);
-		if (is_delim)
+		delim_typ = delim_type((*s)[i], delim);
+		if (delim_typ == 0)
 		{
-			if (!r_delim)
+			start = !not_first ? i : start;
+			not_first = true;
+			c_len++;
+		}
+		else if (delim_typ == 1 || delim_typ == 2)
+		{
+			if (delim_typ == 2 && c_len == 0)
+			{
+				flush_line();
+				break;
+			}
+			if (!r_delim && c_len > 0)
 			{
 				ret = malloc(sizeof(*ret) * c_len);
 				_memcpy(ret, &((*s)[start]), c_len);
 				r_delim = true;
 			}
-		} else if (r_delim && !is_delim)
+		}
+		if (r_delim && (delim_typ == 0 || delim_typ == 2))
 		{
 			*s = &((*s)[i]);
 			return (ret);
 		}
-		if (!r_delim)
-			c_len++;
 		i++;
 	}
-
 	if ((*s)[i] == '\0')
-	{
 		*s = &((*s)[i]);
-	}
 	return (ret);
 }
