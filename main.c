@@ -25,16 +25,19 @@ void run_monty(char **bytecode, stack_t **stack)
 	do {
 		tok = linetoken(bytecode, " \n\0");
 		if (tok == (void *) 0)
-			break;
+		{
+			line_no++;
+			continue;
+		}
 		func = get_op_func(tok);
 		if (func == (void *) 0)
 		{
-			printf("L<%d>: unknown instruction <%s>\n", line_no, tok);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_no, tok);
 			exit(EXIT_FAILURE);
 		}
 		func(stack, line_no);
 		line_no++;
-	} while (tok != (void *) 0);
+	} while (monty_bytecode[0] != '\0');
 }
 
 /**
@@ -49,7 +52,7 @@ int main(int argc, char **argv)
 {
 	int fd_monty;
 	stack_t *stack;
-	/*char *t_free;*/
+	char *t_free;
 
 	stack = (void *) 0;
 	if (argc != 2)
@@ -64,8 +67,9 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	monty_bytecode = read_file(argv[1]);
-	/*t_free = monty_bytecode;*/
+	t_free = monty_bytecode;
 
 	run_monty(&monty_bytecode, &stack);
+	free(t_free);
 	return (EXIT_SUCCESS);
 }
