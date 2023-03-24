@@ -35,6 +35,7 @@ typedef struct instruction_s
 
 void push_stack(stack_t **stack, unsigned int);
 void pall_stack(stack_t **stack, unsigned int);
+void pint_stack(stack_t **stack, unsigned int);
 void (*get_op_func(char *))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
