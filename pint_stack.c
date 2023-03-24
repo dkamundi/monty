@@ -14,8 +14,9 @@ void pint_stack(stack_t **s, unsigned int line_number)
 {
 	if (*s == (void *) 0)
 	{
-		printf("L<%d>: can't pint, stack empty\n", line_number);
+		fprintf(stderr, "L%d: can't pint, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", (*s)->n);
+	flush_line();
 }
