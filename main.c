@@ -1,8 +1,5 @@
 #include "monty.h"
-#include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
 
@@ -16,30 +13,24 @@ char *monty_bytecode = (void *) 0;
  *
  * Return: Nothing
  */
-void run_monty(char *bytecode, stack_t **stack)
+void run_monty(char **bytecode, stack_t **stack)
 {
 	int line_no;
 	char *tok;
-	bool first;
 	void (*func)(stack_t **, unsigned int);
 
-	tok = (void *) 0;
 	line_no = 1;
-	first = true;
+	tok = (void *) 0;
 	do {
-		if (first)
-		{
-			tok = strtok(bytecode, " \n");
-			first = false;
-		}
-		else
-			tok = strtok((void *) 0, " \n");
+		tok = linetoken(bytecode, " \n\0");
 		if (tok == (void *) 0)
 			break;
 		func = get_op_func(tok);
-
 		if (func == (void *) 0)
-			break;
+		{
+			printf("L<%d>: unknown instruction <%s>\n", line_no, tok);
+			exit(EXIT_FAILURE);
+		}
 		func(stack, line_no);
 		line_no++;
 	} while (tok != (void *) 0);
@@ -57,6 +48,7 @@ int main(int argc, char **argv)
 {
 	int fd_monty;
 	stack_t *stack;
+	/*char *t_free;*/
 
 	stack = (void *) 0;
 	if (argc != 2)
@@ -71,7 +63,8 @@ int main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 	monty_bytecode = read_file(argv[1]);
+	/*t_free = monty_bytecode;*/
 
-	run_monty(monty_bytecode, &stack);
+	run_monty(&monty_bytecode, &stack);
 	return (EXIT_SUCCESS);
 }
