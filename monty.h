@@ -41,6 +41,9 @@ char *read_file(char *);
 bool validint(char *);
 char *linetoken(char **, char *);
 bool isDelim(char, char *);
+char *_memcpy(char *, char *, unsigned int);
+int _strlen(const char *);
+int _strcmp(const char *, const char *);
 
 extern char *monty_bytecode;
 #endif
