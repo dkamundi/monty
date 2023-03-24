@@ -1,6 +1,24 @@
 #include "monty.h"
 #include <stdlib.h>
-#include <string.h>
+
+char *_memcpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int i;
+
+	if (src == (void *) 0)
+		return ((void *) 0);
+	if (dest == (void *) 0)
+	{
+		dest = malloc(sizeof(*dest) * n);
+		if (dest == (void *) 0)
+			return (dest);
+	}
+	for (i = 0; src[i] != '\0' && i < n; i++)
+	{
+		dest[i] = src[i];
+	}
+	return (dest);
+}
 
 /**
  * isDelim - Checks whether or not a character is part of the delimiter
@@ -49,7 +67,7 @@ char *linetoken(char **s, char *delim)
 			if (!r_delim)
 			{
 				ret = malloc(sizeof(*ret) * c_len);
-				memcpy(ret, &((*s)[start]), c_len);
+				_memcpy(ret, &((*s)[start]), c_len);
 				r_delim = true;
 			}
 		} else if (r_delim && !is_delim)
