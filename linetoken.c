@@ -1,6 +1,15 @@
 #include "monty.h"
 #include <stdlib.h>
 
+/**
+ * _memcpy - Copies n number of characters from src to dest
+ *
+ * @dest: Destination string
+ * @src: Source string
+ * @n: Number of bytes to copy
+ *
+ * Return: Pointer to destination string
+ */
 char *_memcpy(char *dest, char *src, unsigned int n)
 {
 	unsigned int i;
