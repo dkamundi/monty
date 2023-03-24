@@ -1,0 +1,70 @@
+#include "monty.h"
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * isDelim - Checks whether or not a character is part of the delimiter
+ *
+ * @c: Input character to check
+ * @delim: Input string containing the delimiters
+ *
+ * Return: true if it c is a delimiting character, flase otherwise
+ */
+bool isDelim(char c, char *delim)
+{
+	int i;
+
+	for (i = 0; delim[i] != '\0'; i++)
+	{
+		if (delim[i] == c)
+			return (true);
+	}
+	return (false);
+}
+
+/**
+ * linetoken - Retrieves token on a line (string line)
+ *
+ * @s: Input string containing the tokens
+ * @delim: Strings containing the delimiters
+ *
+ * Return: Ponter to the token retrieved
+ * Description: This function modifies the original string so make sure to
+ * make a copy of the original
+ */
+char *linetoken(char **s, char *delim)
+{
+	int i, start, c_len;
+	char *ret;
+	bool r_delim, is_delim;
+
+	is_delim = r_delim = false;
+	start = c_len = i = 0;
+	ret = (void *) 0;
+	while ((*s)[i] != '\0')
+	{
+		is_delim = isDelim((*s)[i], delim);
+		if (is_delim)
+		{
+			if (!r_delim)
+			{
+				ret = malloc(sizeof(*ret) * c_len);
+				memcpy(ret, &((*s)[start]), c_len);
+				r_delim = true;
+			}
+		} else if (r_delim && !is_delim)
+		{
+			*s = &((*s)[i]);
+			return (ret);
+		}
+		if (!r_delim)
+			c_len++;
+		i++;
+	}
+
+	if ((*s)[i] == '\0')
+	{
+		*s = &((*s)[i]);
+	}
+	return (ret);
+}
