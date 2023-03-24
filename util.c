@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <string.h>
 
 /**
  * get_char_no - This function get the total number of characters in the file
@@ -64,14 +63,36 @@ char *read_file(char *file)
  *
  * Return: 1 if s contains only valid characters, -1 Otherwise
  */
-int validint(char *s)
+bool validint(char *s)
 {
 	int i;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
 		if (s[i] < 48 || s[i] > 57)
-			return (-1);
+			return (false);
 	}
-	return (1);
+	return (true);
+}
+
+/**
+ * flush_line - Flushes the whole character of a line
+ *
+ * Return: Nothing
+ */
+void flush_line(void)
+{
+	char **bytecode;
+	int i;
+
+	i = 0;
+	bytecode = &monty_bytecode;
+	while (*bytecode != (void *) 0 && (*bytecode)[i] != '\0')
+	{
+		if ((*bytecode)[i] == '\n')
+		{
+			*bytecode = &((*bytecode)[i + 1]);
+		}
+		i++;
+	}
 }
