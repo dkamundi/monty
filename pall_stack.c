@@ -23,4 +23,5 @@ void pall_stack(stack_t **stack, unsigned int line_number)
 		}
 	} else
 		printf("Invalid Line Number: %d", line_number);
+	flush_line();
 }
