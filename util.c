@@ -41,6 +41,7 @@ char *read_file(char *file)
 	char *ret;
 	int no_char, fd_monty;
 
+	ret = (void *) 0;
 	fd_monty = open(file, O_RDONLY);
 	if (fd_monty == -1)
 		return ((void *) 0);
@@ -69,7 +70,7 @@ bool validint(char *s)
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (s[i] < 48 || s[i] > 57)
+		if ((s[i] < 48 || s[i] > 57) && (s[i] != 43 && s[i] != 45))
 			return (false);
 	}
 	return (true);
@@ -92,6 +93,7 @@ void flush_line(void)
 		if ((*bytecode)[i] == '\n')
 		{
 			*bytecode = &((*bytecode)[i + 1]);
+			break;
 		}
 		i++;
 	}
