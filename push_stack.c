@@ -1,7 +1,6 @@
 #include "monty.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 /**
  * push_stack - Pushes a new node onto the stack
@@ -23,7 +22,7 @@ void push_stack(stack_t **stack, unsigned int line_number)
 		printf("Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	tok = strtok((void *) 0, " \n");
+	tok = linetoken(&monty_bytecode, " \n");
 	if (!validint(tok))
 	{
 		printf("L<%d>: usage: push integer\n", line_number);
