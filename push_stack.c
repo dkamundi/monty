@@ -19,13 +19,13 @@ void push_stack(stack_t **stack, unsigned int line_number)
 	psh = malloc(sizeof(*psh));
 	if (psh == (void *) 0)
 	{
-		printf("Error: malloc failed\n");
+		fprintf(stderr, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 	tok = linetoken(&monty_bytecode, " \n");
-	if (!validint(tok))
+	if (tok == (void *) 0 || !validint(tok))
 	{
-		printf("L<%d>: usage: push integer\n", line_number);
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	val = atoi(tok);
@@ -39,4 +39,5 @@ void push_stack(stack_t **stack, unsigned int line_number)
 		psh->next = *stack;
 	}
 	*stack = psh;
+	flush_line();
 }
