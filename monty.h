@@ -1,6 +1,8 @@
 #ifndef _MONTY_H
 #define _MONTY_H
 
+#include <stdbool.h>
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -36,7 +38,9 @@ void pall_stack(stack_t **stack, unsigned int);
 void (*get_op_func(char *))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
-int validint(char *);
+bool validint(char *);
+char *linetoken(char **, char *);
+bool isDelim(char, char *);
 
 extern char *monty_bytecode;
 #endif
