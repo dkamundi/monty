@@ -36,15 +36,17 @@ typedef struct instruction_s
 void push_stack(stack_t **stack, unsigned int);
 void pall_stack(stack_t **stack, unsigned int);
 void pint_stack(stack_t **stack, unsigned int);
+void pop_stack(stack_t **stack, unsigned int);
 void (*get_op_func(char *))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
 bool validint(char *);
 char *linetoken(char **, char *);
-bool isDelim(char, char *);
+int delim_type(char, char *);
 char *_memcpy(char *, char *, unsigned int);
 int _strlen(const char *);
 int _strcmp(const char *, const char *);
+void flush_line(void);
 
 extern char *monty_bytecode;
 #endif
