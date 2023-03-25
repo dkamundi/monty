@@ -53,6 +53,10 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 		{"push", push_stack},
 		{"pall", pall_stack},
 		{"pint", pint_stack},
+		{"pop", pop_stack},
+		{"swap", swap_stack},
+		{"add", add_stack},
+		{"nop", nop_stack},
 		{((void *) 0), ((void *) 0)}
 	};
 	int i;
