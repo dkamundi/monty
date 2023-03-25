@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 /**
- * swap_stack : Swaps the top two element of the stack
+ * swap_stack - Swaps the top two element of the stack
  *
  * @s: Pointer to the top of the stack
  * @line_number: Line number of the monty bytecode being executed
