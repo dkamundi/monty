@@ -33,10 +33,13 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-void push_stack(stack_t **stack, unsigned int);
-void pall_stack(stack_t **stack, unsigned int);
-void pint_stack(stack_t **stack, unsigned int);
-void pop_stack(stack_t **stack, unsigned int);
+void push_stack(stack_t **, unsigned int);
+void pall_stack(stack_t **, unsigned int);
+void pint_stack(stack_t **, unsigned int);
+void pop_stack(stack_t **, unsigned int);
+void swap_stack(stack_t **, unsigned int);
+void add_stack(stack_t **, unsigned int);
+void nop_stack(stack_t **, unsigned int);
 void (*get_op_func(char *))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
