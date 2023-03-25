@@ -15,26 +15,26 @@ int _strlen(const char *s)
 }
 
 /**
- * _strcmp - Compares two strings
+ * _strncmp - Compares two strings
  *
- * @s1: Input string
- * @s2: Input string
+ * @s: Input string
+ * @m: pointer to monty_b containing the bytecode string
  *
- * Return: 0 if s1 and s2 are equal, -1 is s1 < s2, and 1 if s1 > s2
+ * Return: 0 if s and the opcode in m are equal, -1 is s less, and 1 otherwise
  */
-int _strcmp(const char *s1, const char *s2)
+int _strncmp(const char *s, monty_b **m)
 {
-	int len1, len2, i;
+	int len1, m_i, i;
 
-	len1 = _strlen(s1);
-	len2 = _strlen(s2);
-	if (len1 != len2)
+	len1 = _strlen(s);
+	m_i = (*m)->start;
+	if (len1 != (*m)->len)
 		return (-1);
-	for (i = 0; s1[i] != '\0' && i < len1; i++)
+	for (i = 0; s[i] != '\0' && i < len1; i++, m_i++)
 	{
-		if (s1[i] > s2[i])
+		if (s[i] > (*m)->bytecode[m_i])
 			return (1);
-		else if (s1[i] < s2[i])
+		else if (s[i] < (*m)->bytecode[m_i])
 			return (-1);
 	}
 	return (0);
@@ -43,11 +43,11 @@ int _strcmp(const char *s1, const char *s2)
 /**
  * get_op_func - Selects the correct function to perform the operation asked
  *
- * @s: Operator passed as argument to the program
+ * @monty: Pointer to monty data which contains the opcode to retrieve
  *
  * Return: Pointer to the function that corresponds to the opcode s
  */
-void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
+void (*get_op_func(monty_b **monty))(stack_t **stack, unsigned int line_number)
 {
 	instruction_t ops[] = {
 		{"push", push_stack},
@@ -64,7 +64,7 @@ void (*get_op_func(char *s))(stack_t **stack, unsigned int line_number)
 	i = 0;
 	while (ops[i].opcode != (void *) 0 || ops[i].f != (void *) 0)
 	{
-		if (_strcmp(ops[i].opcode, s) == 0)
+		if (_strncmp(ops[i].opcode, monty) == 0)
 			return (ops[i].f);
 		i++;
 	}
