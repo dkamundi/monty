@@ -2,30 +2,30 @@
 #include <stdlib.h>
 
 /**
- * _memcpy - Copies n number of characters from src to dest
+ * _memcpy - Copies a number of characters from m to dest
  *
  * @dest: Destination string
- * @src: Source string
- * @n: Number of bytes to copy
+ * @m: Pointer to monty struct containing the opcode string
  *
  * Return: Pointer to destination string
  */
-char *_memcpy(char *dest, char *src, unsigned int n)
+char *_memcpy(char *dest, monty_b **m)
 {
-	unsigned int i;
+	int i, j;
 
-	if (src == (void *) 0)
+	if ((*m)->len == -2 || (*m)->len < 0)
 		return ((void *) 0);
 	if (dest == (void *) 0)
 	{
-		dest = malloc(sizeof(*dest) * n);
+		dest = malloc(sizeof(*dest) * (*m)->len + 1);
 		if (dest == (void *) 0)
 			return (dest);
 	}
-	for (i = 0; src[i] != '\0' && i < n; i++)
+	for (j = 0, i = (*m)->start; i < ((*m)->start + (*m)->len); i++, j++)
 	{
-		dest[i] = src[i];
+		dest[j] = (*m)->bytecode[i];
 	}
+	dest[j] = '\0';
 	return (dest);
 }
 
@@ -57,32 +57,28 @@ int delim_type(char c, char *delim)
 /**
  * linetoken - Retrieves token on a line (string line)
  *
- * @s: Input string containing the tokens
+ * @monty: Pointer to monty struct containing the string with tokens
  * @delim: Strings containing the delimiters
  *
  * Return: Ponter to the token retrieved
- * Description: This function modifies the original string so make sure to
- * make a copy of the original
  */
-char *linetoken(char **s, char *delim)
+void linetoken(monty_b **monty, char *delim)
 {
-	int i, start, c_len, delim_typ;
-	char *ret;
+	int i, c_len, delim_typ;
 	bool r_delim, not_first;
 
 	not_first = r_delim = false;
-	delim_typ = start = c_len = i = 0;
-	ret = (void *) 0;
-	while (((*s)[i] != '\0'))
+	c_len = delim_typ = 0;
+	i = (*monty)->start;
+	while ((*monty)->bytecode[i] != '\0')
 	{
-		delim_typ = delim_type((*s)[i], delim);
+		delim_typ = delim_type((*monty)->bytecode[i], delim);
 		if (delim_typ == 0)
 		{
-			start = !not_first ? i : start;
+			(*monty)->start = !not_first ? i : (*monty)->start;
 			not_first = true;
 			c_len++;
-		}
-		else if (delim_typ == 1 || delim_typ == 2)
+		} else if (delim_typ == 1 || delim_typ == 2)
 		{
 			if (delim_typ == 2 && c_len == 0)
 			{
@@ -91,19 +87,18 @@ char *linetoken(char **s, char *delim)
 			}
 			if (!r_delim && c_len > 0)
 			{
-				ret = malloc(sizeof(*ret) * c_len);
-				_memcpy(ret, &((*s)[start]), c_len);
+				(*monty)->len = c_len;
 				r_delim = true;
 			}
 		}
+
 		if (r_delim && (delim_typ == 0 || delim_typ == 2))
 		{
-			*s = &((*s)[i]);
-			return (ret);
+			(*monty)->arg = delim_typ == 0 ? i : -1;
+			break;
 		}
 		i++;
 	}
-	if ((*s)[i] == '\0')
-		*s = &((*s)[i]);
-	return (ret);
+	if ((*monty)->bytecode[i] == '\0')
+		(*monty)->start = -1;
 }
