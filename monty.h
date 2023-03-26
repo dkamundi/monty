@@ -33,6 +33,27 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct monty_op - monty bytecode and variables to help in parsing
+ * @bytecode: the monty bytecode
+ * @len: the length of the bytecode to read
+ * @start: index to start reading opcode
+ * @pstart: index to start reading opcode
+ * @plen: length of the previous opcode
+ *
+ * Description: This struct aid in extracting and filtering
+ * the monty bytecode
+ */
+typedef struct monty_op
+{
+	char *bytecode;
+	int len;
+	int start;
+	int pstart;
+	int arg;
+	int plen;
+} monty_b;
+
 void push_stack(stack_t **, unsigned int);
 void pall_stack(stack_t **, unsigned int);
 void pint_stack(stack_t **, unsigned int);
@@ -40,16 +61,17 @@ void pop_stack(stack_t **, unsigned int);
 void swap_stack(stack_t **, unsigned int);
 void add_stack(stack_t **, unsigned int);
 void nop_stack(stack_t **, unsigned int);
-void (*get_op_func(char *))(stack_t **, unsigned int);
+void free_stack(stack_t **);
+void (*get_op_func(monty_b **))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
 bool validint(char *);
-char *linetoken(char **, char *);
+void linetoken(monty_b **, char *);
 int delim_type(char, char *);
-char *_memcpy(char *, char *, unsigned int);
+char *_memcpy(char *, monty_b **);
 int _strlen(const char *);
-int _strcmp(const char *, const char *);
+int _strncmp(const char *, monty_b **);
 void flush_line(void);
 
-extern char *monty_bytecode;
+extern monty_b *code_m;
 #endif
