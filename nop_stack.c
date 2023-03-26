@@ -11,6 +11,6 @@
 void nop_stack(stack_t **s, unsigned int line_number)
 {
 	if (line_number >= 1)
-		*s = (void *) 0;
+		*s = *s;
 	flush_line();
 }
