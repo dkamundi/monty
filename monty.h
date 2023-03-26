@@ -35,6 +35,7 @@ typedef struct instruction_s
 
 /**
  * struct monty_op - monty bytecode and variables to help in parsing
+ * @s: A pointer to the stack the opcodes modify
  * @bytecode: the monty bytecode
  * @len: the length of the bytecode to read
  * @start: index to start reading opcode
@@ -47,6 +48,7 @@ typedef struct instruction_s
  */
 typedef struct monty_op
 {
+	stack_t *s;
 	char *bytecode;
 	int len;
 	int start;
@@ -62,7 +64,8 @@ void pop_stack(stack_t **, unsigned int);
 void swap_stack(stack_t **, unsigned int);
 void add_stack(stack_t **, unsigned int);
 void nop_stack(stack_t **, unsigned int);
-void free_stack(stack_t **);
+void free_stack();
+void free_all();
 void (*get_op_func(monty_b **))(stack_t **, unsigned int);
 int get_char_no(char *);
 char *read_file(char *);
