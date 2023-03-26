@@ -4,15 +4,13 @@
 /**
  * free_stack - Frees all the nodes in a stack
  *
- * @s: Pointer to the top of the stack
- *
  * Return: Nothing
  */
-void free_stack(stack_t **s)
+void free_stack()
 {
 	stack_t *iter, *tmp;
 
-	iter = *s;
+	iter = code_m->s;
 	tmp = (void *) 0;
 	while (iter)
 	{
