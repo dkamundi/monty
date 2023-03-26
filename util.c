@@ -83,18 +83,16 @@ bool validint(char *s)
  */
 void flush_line(void)
 {
-	char **bytecode;
 	int i;
 
-	i = 0;
-	bytecode = &monty_bytecode;
-	while (*bytecode != (void *) 0 && (*bytecode)[i] != '\0')
+	i = code_m->start;
+	while (code_m != (void *) 0 || code_m->bytecode[i] != '\0')
 	{
-		if ((*bytecode)[i] == '\n')
+		if (code_m->bytecode[i++] == '\n')
 		{
-			*bytecode = &((*bytecode)[i + 1]);
+			code_m->start = i;
 			break;
 		}
-		i++;
 	}
+	code_m->len = -2;
 }
