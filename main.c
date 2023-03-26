@@ -53,9 +53,7 @@ void run_monty(monty_b **monty, stack_t **stack)
 int main(int argc, char **argv)
 {
 	int fd_monty;
-	stack_t *stack;
 
-	stack = (void *) 0;
 	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
@@ -74,10 +72,9 @@ int main(int argc, char **argv)
 	code_m->pstart = 0;
 	code_m->plen = -1;
 	code_m->arg = -1;
+	code_m->s = (void *) 0;
 
-	run_monty(&code_m, &stack);
-	free_stack(&stack);
-	free(code_m->bytecode);
-	free(code_m);
+	run_monty(&code_m, &(code_m->s));
+	free_all();
 	return (EXIT_SUCCESS);
 }
