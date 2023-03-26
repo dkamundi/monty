@@ -77,5 +77,7 @@ int main(int argc, char **argv)
 
 	run_monty(&code_m, &stack);
 	free_stack(&stack);
+	free(code_m->bytecode);
+	free(code_m);
 	return (EXIT_SUCCESS);
 }
