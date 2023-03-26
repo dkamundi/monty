@@ -21,8 +21,6 @@ void pall_stack(stack_t **stack, unsigned int line_number)
 			printf("%d\n", iter->n);
 			iter = iter->next;
 		}
-		if (iter == (void *) 0)
-			printf("%d\n", 0);
 	} else
 		printf("Invalid Line Number: %d", line_number);
 	flush_line();
