@@ -57,6 +57,14 @@ void (*get_op_func(monty_b **monty))(stack_t **stack, unsigned int line_number)
 		{"swap", swap_stack},
 		{"add", add_stack},
 		{"nop", nop_stack},
+		{"sub", sub_stack},
+		{"div", div_stack},
+		{"mul", mul_stack},
+		{"mod", mod_stack},
+		{"pchar", pchar_stack},
+		{"pstr", pstr_stack},
+		{"rotl", rotl_stack},
+		{"rotr", rotr_stack},
 		{((void *) 0), ((void *) 0)}
 	};
 	int i;
