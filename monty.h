@@ -42,6 +42,7 @@ typedef struct instruction_s
  * @pstart: index to start reading opcode
  * @plen: length of the previous opcode
  * @arg: Holds the index for argument (if it has one)
+ * @is_stack: Tell wether or not the stack is in stack mode
  *
  * Description: This struct aid in extracting and filtering
  * the monty bytecode
@@ -55,6 +56,7 @@ typedef struct monty_op
 	int pstart;
 	int arg;
 	int plen;
+	bool is_stack;
 } monty_b;
 
 void push_stack(stack_t **, unsigned int);
@@ -64,6 +66,14 @@ void pop_stack(stack_t **, unsigned int);
 void swap_stack(stack_t **, unsigned int);
 void add_stack(stack_t **, unsigned int);
 void nop_stack(stack_t **, unsigned int);
+void sub_stack(stack_t **, unsigned int);
+void div_stack(stack_t **, unsigned int);
+void mul_stack(stack_t **, unsigned int);
+void mod_stack(stack_t **, unsigned int);
+void pchar_stack(stack_t **, unsigned int);
+void pstr_stack(stack_t **, unsigned int);
+void rotl_stack(stack_t **, unsigned int);
+void rotr_stack(stack_t **, unsigned int);
 void free_stack();
 void free_all();
 void (*get_op_func(monty_b **))(stack_t **, unsigned int);
