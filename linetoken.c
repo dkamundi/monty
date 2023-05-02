@@ -46,6 +46,8 @@ int delim_type(char c, char *delim)
 
 	if (c == '\n')
 		return (2);
+	if (c == '#')
+		return (3);
 	for (i = 0; delim[i] != '\0'; i++)
 	{
 		if (delim[i] == c)
@@ -78,9 +80,9 @@ void linetoken(monty_b **monty, char *delim)
 			(*monty)->start = !not_first ? i : (*monty)->start;
 			not_first = true;
 			c_len++;
-		} else if (delim_typ == 1 || delim_typ == 2)
+		} else if (delim_typ == 1 || delim_typ == 2 || delim_typ == 3)
 		{
-			if (delim_typ == 2 && c_len == 0)
+			if ((delim_typ == 2 || delim_typ == 3) && c_len == 0)
 			{
 				flush_line();
 				break;
