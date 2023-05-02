@@ -19,6 +19,8 @@ void pstr_stack(stack_t **s, unsigned int line_number)
 	if ((*s) == (void *) 0)
 	{
 		printf("\n");
+		flush_line();
+		return;
 	}
 
 	for (iter = *s; iter != (void *) 0; iter = iter->next)
